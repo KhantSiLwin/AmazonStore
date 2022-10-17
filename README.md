@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Installation Steps
 
 
@@ -26,3 +27,6 @@ Run commands
 ### If you see the window below then you are set to build AMAZON 2.0!
 
 ![Template Screenshot](TemplateScreenshot.jpg?raw=true "Template Screenshot")
+=======
+# AmazonStore
+>>>>>>> 1d8250d3772fa1a345bd5a9279201384034640d6
