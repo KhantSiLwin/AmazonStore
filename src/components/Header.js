@@ -1,8 +1,16 @@
 import Image from 'next/image'
 import {MenuIcon,SearchIcon,ShoppingCartIcon} from '@heroicons/react/outline'
+import {signIn,signOut,useSession} from 'next-auth/react'
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { selectItems } from '../slices/basketSlice';
+
 
 
 export const Header = () => {
+    const {data:session}= useSession();
+    const router = useRouter();
+    const items = useSelector(selectItems);
     return (
         <header>
             {/* top nav  */}
@@ -10,6 +18,7 @@ export const Header = () => {
 
              <div className="mt-2 flex flex-grow items-center sm:flex-grow-0">
                 <Image
+                    onClick={()=>router.push('/')}
                     src="https://links.papareact.com/f90"
                     width={150}
                     height={40}
@@ -26,16 +35,20 @@ export const Header = () => {
 
             {/* right */}
             <div className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap">
-                <div className="cursor-pointer hover:underline">
-                    <p>Hello Noel</p>
+                <div onClick={!session ? signIn : signOut } className="cursor-pointer hover:underline">
+                    <p className="hover:underline">
+                    {session ? `Hello ,${session.user.name}` :'Sign In'}
+                    </p>
                     <p className="font-extrabold md:text-sm">Account & Lists</p>
                 </div>
                 <div className="cursor-pointer hover:underline">
                     <p>Returns</p>
                     <p className="font-extrabold md:text-sm">& Orders</p>
                 </div>
-                <div className="relative cursor-pointer hover:underline flex items-center">
-                    <span className="bg-yellow-400 h-4 absolute top-0 right-0 md:right-10 font-bold text-black w-4 rounded-full text-center">0</span>
+                <div onClick={()=>router.push('/checkout')} className="relative cursor-pointer hover:underline flex items-center">
+                    <span className="bg-yellow-400 h-4 absolute top-0 right-0 md:right-10 font-bold text-black w-4 rounded-full text-center">
+                        {items.length}
+                        </span>
                     <ShoppingCartIcon className="h-10" />
                     <p className="hidden md:inline font-extrabold md:text-sm">Basket</p>
                 </div>
